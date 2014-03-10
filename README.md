@@ -50,7 +50,7 @@ The script also makes a tarball of our Puppet modules and passes that to the Ami
 
 # Using our New AMI #
 
-Now we can launch an EC2 instance with our new AMI.  In the EC2 console, go to My AMIs, find the AMI that we just created, and start the Launch wizard.
+Now we can launch an EC2 instance with our new AMI. The ID was in the Aminator output and should also have been captured in an AMI_ID file by the wrapper script.  In the EC2 console, go to My AMIs, find the AMI that we just created, and start the Launch wizard.
 
 - On **Step 3: Configure Instance Details**, open the **Advanced Details** section at the bottom and paste in the script [here](https://github.com/robsweet/aminator_demo/blob/master/ec2_userdata.sh).  This will pass a shell script to the new instance via the Userdata mechanism that will do the 'launchconfig' Puppet run to do post-Aminator config that we don't want as part of our generic AMI.  To illustrate the point, change the value of the **FACTER_special_guest** variable in the script to something else.
  
