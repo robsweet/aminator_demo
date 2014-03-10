@@ -1,0 +1,5 @@
+provision_config_files:
+  - /etc/resolv.conf
+  - /etc/yum.repos.d/amzn-main.repo
+  - /etc/yum.repos.d/amzn-updates.repo
+  - /etc/yum.repos.d/epel.repo
