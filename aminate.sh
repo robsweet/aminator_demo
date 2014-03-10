@@ -17,7 +17,7 @@ sudo /usr/bin/aminate --debug --name $(date +%Y.%m.%d.%H.%M) -B ${AWS_FOUNDATION
 	--puppet-args="-e 'include ${PUPPET_CLASS}'" \
 	manifests.tgz | tee aminator.log
 
-AMI_ID=$(grep ' id: ami-' ${WORKSPACE}/aminator.log | awk '{ print $5 }')
+AMI_ID=$(grep ' id: ami-' aminator.log | awk '{ print $5 }')
 
 if [ -z "$AMI_ID" ]; then exit 1; fi
 
