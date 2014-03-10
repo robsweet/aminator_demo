@@ -22,15 +22,15 @@ We've basically got three steps to do:
     
     * Make sure you specify an SSH keypair for the box
     
-0. SSH to the box
+2\. SSH to the box
 
-0. sudo su -
+3\. sudo su -
 
-0. yum install -y puppet git
+4\. yum install -y puppet git
 
-0. git clone https://github.com/robsweet/aminator_demo.git
+5\. git clone https://github.com/robsweet/aminator_demo.git
 
-0. /usr/bin/puppet apply --modulepath=${HOME}/aminator_demo/modules -e 'include aminator'
+6\. /usr/bin/puppet apply --modulepath=${HOME}/aminator_demo/modules -e 'include aminator'
 
 **At this point, you should have a running box that can build AMIs with Aminator.**
 
