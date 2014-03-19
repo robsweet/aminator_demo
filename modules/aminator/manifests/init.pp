@@ -1,7 +1,13 @@
 class aminator {
 
-  package { ['python-pip', 'git'] : 
+  package { ['python-pip', 'git'] :
     ensure => latest
+  }
+
+  exec { 'upgrade_pip':
+    cwd     => '/root',
+    command => '/usr/bin/pip install --upgrade pip',
+    creates => '/usr/lib/python2.6/site-packages/pip-1.5.4-py2.6.egg-info',
   }
 
   exec {'install_aminator':
@@ -26,6 +32,6 @@ class aminator {
     source  => 'puppet:///modules/aminator/etc/aminator',
   }
 
-  Package['python-pip', 'git'] -> Exec['install_aminator'] -> Exec['install_aminator_puppet_plugin']
-                                  Exec['install_aminator'] -> File['aminator_configs']
+  Package['python-pip', 'git'] -> Exec['upgrade_pip'] ->  Exec['install_aminator'] -> Exec['install_aminator_puppet_plugin']
+                                                          Exec['install_aminator'] -> File['aminator_configs']
 }
