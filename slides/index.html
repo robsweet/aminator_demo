@@ -41,17 +41,17 @@
 					<h2>with Aminator and Packer</h3>
 					<center><table><tr>
 						<td style='padding:30px;'>
-						    <small>
-						    	Rob Sweet<br />
-						    	<a href='mailto:rob.sweet@manheim.com'>rob.sweet@manheim.com</a><br />
+								<small>
+									Rob Sweet<br />
+									<a href='mailto:rob.sweet@manheim.com'>rob.sweet@manheim.com</a><br />
 								Advisory Engineer for AWS Cloud<br />
 								<a href='http://www.manheim.com'>Manheim</a>
 							</small>
 						</td>
 						<td style='padding:30px;'>
 							<small>
-						    	Luke Reimer<br />
-						    	<a href='mailto:luke.reimer@spinen.com'>luke.reimer@spinen.com</a><br />
+									Luke Reimer<br />
+									<a href='mailto:luke.reimer@spinen.com'>luke.reimer@spinen.com</a><br />
 								<a href='http://www.spinen.com'>SPINEN</a>
 							</small>
 						</td>
@@ -81,7 +81,7 @@
 					<br />
 					<br />
 					<p><a href='mailto:aaron.feng@gmail.com'>Aaron Feng</a> gave a great talk about the benefits of AMIs at DevOps Atlanta
-					    => <a href='http://bit.ly/19etGdU'>http://bit.ly/19etGdU</a></p>
+							=> <a href='http://bit.ly/19etGdU'>http://bit.ly/19etGdU</a></p>
 				</section>
 
 				<section>
@@ -96,6 +96,82 @@
 						<li><p>Aminator Demo Source Code &nbsp; &nbsp; <a href='https://github.com/robsweet/aminator_demo'>https://github.com/robsweet/aminator_demo</a></p></li>
 					</ul>
 				</section>
+
+				<section>
+					<h2>Bootstrap the Aminator Box</h2>
+					<br />
+					<pre>
+						<code data-trim contenteditable class='bash'>
+sudo su -
+
+yum install -y puppet git
+
+git clone https://github.com/robsweet/aminator_demo.git
+
+/usr/bin/puppet apply \
+	--modulepath=${HOME}/aminator_demo/modules \
+	-e 'include aminator'
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>Aminate!</h2>
+					<pre>
+						<code data-trim contenteditable class='bash'>
+#!/bin/bash
+
+AWS_FOUNDATION_AMI_ID=ami-35792c5c
+
+PUPPET_ENV_VARS="FACTER_event='AWS Atlanta Aminator Demo'"
+
+PUPPET_CLASS='web_server'
+
+
+tar -czvf manifests.tgz modules
+
+echo "*******************************************************"
+
+/usr/bin/aminate --debug \
+	--name $(date +%Y.%m.%d.%H.%M) \
+	-B ${AWS_FOUNDATION_AMI_ID} \
+	--preserve-on-error \
+	--puppet-env-vars="${PUPPET_ENV_VARS}" \
+	--puppet-args="-e 'include ${PUPPET_CLASS}'" \
+	manifests.tgz | tee aminator.log
+
+AMI_ID=$(grep ' id: ami-' aminator.log | awk '{ print $5 }')
+
+if [ -z "$AMI_ID" ]; then exit 1; fi
+
+echo "*******************************************************"
+
+echo AMI_ID=$AMI_ID > AMI_ID
+						</code>
+					</pre>
+				</section>
+
+				<section>
+					<h2>Launch an Instance</h2>
+					<p>We'll launch an instance with our new AMI and use the Userdata mechanism to add some post-deployment config.</p>
+					<br />
+					<pre>
+						<code data-trim contenteditable class='bash'>
+#!/bin/bash
+
+export FACTER_special_guest='Charlie Chaplin'
+
+export FACTER_launchconfig=true
+
+/usr/bin/puppet apply
+	--logdest /var/log/puppet_launchconfig \
+	--debug \
+	--verbose \
+	-e 'include web_server'
+						</code>
+					</pre>
+				</section>
+
 			</div>
 
 		</div>
