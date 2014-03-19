@@ -118,24 +118,20 @@ git clone https://github.com/robsweet/aminator_demo.git
 				<section>
 					<h2>Aminate!</h2>
 					<pre>
-						<code data-trim contenteditable class='bash'>
+						<code data-trim contenteditable class='bash' style='font-size: .66em; line-height:1.3em;'>
 #!/bin/bash
 
-AWS_FOUNDATION_AMI_ID=ami-35792c5c
-
+AWS_FOUNDATION_AMI_ID='ami-35792c5c'
 PUPPET_ENV_VARS="FACTER_event='AWS Atlanta Aminator Demo'"
-
 PUPPET_CLASS='web_server'
-
 
 tar -czvf manifests.tgz modules
 
 echo "*******************************************************"
 
-/usr/bin/aminate --debug \
+/usr/bin/aminate --debug --preserve-on-error \
 	--name $(date +%Y.%m.%d.%H.%M) \
 	-B ${AWS_FOUNDATION_AMI_ID} \
-	--preserve-on-error \
 	--puppet-env-vars="${PUPPET_ENV_VARS}" \
 	--puppet-args="-e 'include ${PUPPET_CLASS}'" \
 	manifests.tgz | tee aminator.log
