@@ -1,3 +1,6 @@
+This demo was written for the March 2014 meeting of the AWS Atlanta meetup.  
+Video of the presentation can be found at http://youtu.be/UL_FI5hG3js
+
 Aminating for Fun and Profit
 ============================
 
