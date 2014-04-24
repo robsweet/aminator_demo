@@ -12,7 +12,7 @@ class aminator {
 
   exec {'install_aminator':
     cwd     => '/root',
-    command => '/usr/bin/pip install git+https://github.com/Netflix/aminator.git#egg=aminator',
+    command => '/usr/bin/pip install git+https://github.com/Netflix/aminator.git@2.0.221-dev#egg=aminator',
     creates => '/usr/lib/python2.6/site-packages/aminator',
   }
 
