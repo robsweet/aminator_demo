@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export FACTER_special_guest='Charlie Chaplin'
+export FACTER_datacenter='datacenter2'
 
 export FACTER_launchconfig=true 
 

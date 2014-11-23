@@ -1,4 +1,12 @@
-class web_server {
+class web_server ( $venue = 'The Greek' ) {
+
+  if $::osfamily == 'Debian' {
+    $php_package = 'libapache2-mod-php5'
+    $apache_service = 'apache2'
+  } else  {
+    $php_package = 'php55'
+    $apache_service = 'httpd'
+  }
 
   yumrepo { 'amzn-updates' :
     mirrorlist            => 'http://repo.us-east-1.amazonaws.com/$releasever/updates/mirror.list',
@@ -11,7 +19,10 @@ class web_server {
     timeout               => '10',
   }
 
-  package { ['php55'] : ensure => latest }
+  package { 'php5' : 
+    name   => $php_package,
+    ensure => latest,
+  }
 
   file { 'index.html' :
     ensure => absent,
@@ -28,11 +39,12 @@ class web_server {
 
   service { 'httpd':
     ensure => running,
+    name   => $apache_service,
     enable => true,
   }
 
 
-  Yumrepo['amzn-updates'] -> Package['php55'] -> File['index.html', 'documentroot'] -> Service['httpd']  
+  Yumrepo['amzn-updates'] -> Package['php5'] -> File['index.html', 'documentroot'] -> Service['httpd']  
 
 
 
@@ -45,6 +57,13 @@ class web_server {
       before  => Service['httpd'],
     }
 
+  }
+
+  file { 'venue' :
+    path    => '/var/www/html/venue.txt',
+    mode    => '0644',
+    content => $venue,
+    before  => Service['httpd'],
   }
 
 }

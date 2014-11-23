@@ -33,3 +33,11 @@ body {
 	text-shadow: -2px 2px 2px #999;
 	color: #f50000;
 }
+
+#venue {
+	padding-left: 120px;
+	font-weight: bold;
+	font-size: 30pt;
+	text-shadow: -2px 2px 2px #999;
+	color: #f50000;
+}

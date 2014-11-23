@@ -15,5 +15,12 @@
 		<div id='special_guest'>
 			<?php include('special_guest.txt'); ?>
 		</div>
+
+		<div id='with'>LIVE at</div>
+
+		<div id='venue'>
+			<?php include('venue.txt'); ?>
+		</div>
+
 	</body>
 </html>

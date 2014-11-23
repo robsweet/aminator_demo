@@ -1,0 +1,12 @@
+---
+:backends:
+  - yaml
+
+:hierarchy:
+  - "datacenters/%{::datacenter}"
+
+:yaml:
+  :datadir: /etc/puppet/hieradata
+
+:puppet:
+  :datasource: data

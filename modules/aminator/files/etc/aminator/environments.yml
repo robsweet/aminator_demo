@@ -1,4 +1,4 @@
-default: ec2_puppet_linux
+default: ec2_puppet_redhat
 ec2_yum_linux:
     cloud: ec2
     distro: redhat
@@ -6,7 +6,7 @@ ec2_yum_linux:
     volume: linux
     blockdevice: linux
     finalizer: tagging_ebs
-ec2_puppet_linux:
+ec2_puppet_redhat:
     cloud: ec2
     distro: redhat
     provisioner: puppet
